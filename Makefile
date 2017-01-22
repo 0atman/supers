@@ -7,9 +7,8 @@ shell: migrate
 migrate:
 	docker-compose run web ./manage.py migrate
 
-
 makemigrations:
-	docker-compose run web ./manage.py makemigrations
+	docker-compose run web ./manage.py makemigrations gm
 
 createsuperuser: migrate
 	docker-compose run web ./manage.py createsuperuser
