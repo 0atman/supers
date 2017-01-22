@@ -19,6 +19,9 @@ class BaseModel(Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        abstract = True
+
 
 class Skill(BaseModel):
     """Players' skills."""
@@ -29,8 +32,13 @@ class Contact(BaseModel):
     pass
 
 
+class Mission(BaseModel):
+    description = TextField()
+
+
 class Stage(BaseModel):
     description = TextField()
+    mission = ForeignKey(Mission, related_name="stages")
     on_success = ForeignKey("Stage", related_name="stage_on_success", blank=True, null=True)
     on_failure = ForeignKey("Stage", related_name="stage_on_failure", blank=True, null=True)
     code = CharField(max_length=200)

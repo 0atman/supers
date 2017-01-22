@@ -76,8 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'supers.wsgi.application'
-
-
+ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
