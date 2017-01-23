@@ -31,23 +31,15 @@ class CustomIndexDashboard(Dashboard):
             deletable=False,
             collapsible=False,
             children=[
-                # [_('Return to site'), '/'],
-                [_('Change password'),
-                 reverse('%s:password_change' % site_name)],
-                [_('Log out/off'), reverse('%s:logout' % site_name)],
+                [_('Create Missions'), '/admin/gm/mission/'],
+                [_('Complete Stages'), '/admin/gm/stage/'],
+                [_('Team Management'), '/admin/gm/team/'],
             ]
         ))
 
-        # append an app list module for "Applications"
-        self.children.append(modules.AppList(
-            _('Entities'),
-            exclude=('django.contrib.*',),
-        ))
-
-        # append an app list module for "Administration"
-        self.children.append(modules.AppList(
-            _('GM Administration'),
-            models=('django.contrib.*',),
+        self.children.append(modules.DashboardModule(
+            title="HI",
+            children=['Welcome to the admin. Here you can chose quick actions from the above, or you can dive into the CMS in the "Applications" menu. To add GMs, hit the Administration menu.'],
         ))
 
         # append a recent actions module

@@ -7,7 +7,7 @@ from django.db.models import (
     CharField,
     ManyToManyField,
     TextField,
-    NullBooleanField,
+    BooleanField,
     DateTimeField,
 )
 
@@ -24,7 +24,7 @@ class BaseModel(Model):
 
 
 class Skill(BaseModel):
-    """Players' skills."""
+    """Characters' skills."""
     pass
 
 
@@ -38,6 +38,7 @@ class Mission(BaseModel):
 
 class Stage(BaseModel):
     description = TextField()
+    current_characters = ManyToManyField("Character")
     mission = ForeignKey(Mission, related_name="stages")
     on_success = ForeignKey("Stage", related_name="stage_on_success", blank=True, null=True)
     on_failure = ForeignKey("Stage", related_name="stage_on_failure", blank=True, null=True)
@@ -45,7 +46,7 @@ class Stage(BaseModel):
     uid = CharField(max_length=200)
     glory_on_success = IntegerField()
     glory_on_failure = IntegerField()
-    showdown = NullBooleanField(blank=True, null=True)
+    showdown = BooleanField()
     start_time = DateTimeField(null=True, blank=True)
     end_time = DateTimeField(null=True, blank=True)
     contact = ManyToManyField(Contact)
@@ -58,6 +59,7 @@ class Stage(BaseModel):
 
 class Character(BaseModel):
     """Characters."""
+    player = CharField(max_length=255)
     glory = IntegerField(default=0)
     skills = ManyToManyField(Skill)
     contacts = ManyToManyField(Contact)
@@ -65,14 +67,8 @@ class Character(BaseModel):
 
 
 class Team(BaseModel):
-    lead = ForeignKey(Character)
     members = ManyToManyField(Character, related_name="team_members")
     glory = IntegerField(default=0)
-
-
-class MissionGroup(BaseModel):
-    members = ManyToManyField(Character)
-    the_stage = ForeignKey(Stage, related_name="mission_group")
 
 
 class News(BaseModel):

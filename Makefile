@@ -2,7 +2,7 @@ server: migrate
 	docker-compose up -t0
 
 shell: migrate
-	docker-composerun web ./manage.py shell
+	docker-compose run web ./manage.py shell
 
 migrate:
 	docker-compose run web ./manage.py migrate
