@@ -33,14 +33,22 @@ class Contact(BaseModel):
 
 
 class Mission(BaseModel):
-    description = TextField()
+    description = TextField(help_text="GM-only notes")
 
 
 class Stage(BaseModel):
-    description = TextField()
+    description = TextField(
+        help_text="GM-only notes"
+    )
     current_characters = ManyToManyField("Character")
     mission = ForeignKey(Mission, related_name="stages")
-    on_success = ForeignKey("Stage", related_name="stage_on_success", blank=True, null=True)
+    on_success = ForeignKey(
+        "Stage",
+        related_name="stage_on_success",
+        help_text="The mission to trigger on success",
+        blank=True,
+        null=True)
+
     on_failure = ForeignKey("Stage", related_name="stage_on_failure", blank=True, null=True)
     code = CharField(max_length=200)
     uid = CharField(max_length=200)
